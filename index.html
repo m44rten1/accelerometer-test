@@ -7,5 +7,39 @@
 </head>
 <body>
   <h1>HW! :)</h1>
+  <p>Acc: </p>
+  <p id="acc"></p>
+  <button id="initButton">Click me!</button>
+  <p id="logs"></p>
+  <script>
+    const button = document.getElementById("initButton");
+
+    let log = "";
+    let acc = 0;
+
+    button.onclick = (e) => {
+      e && e.preventDefault();
+      if (
+        DeviceMotionEvent &&
+        typeof DeviceMotionEvent.requestPermission === "function"
+      ) {
+        DeviceMotionEvent.requestPermission();
+      }
+
+      window.addEventListener("devicemotion", (event) => {
+        acc = event.acceleration.x;
+        log += `
+          Acc: ${event.acceleration.x}
+          time: ${new Date().getTime()}
+        `;
+
+        const accEl = document.getElementById("acc");
+        accEl.innerHTML = acc;
+
+        const logEl = document.getElementById("logs");
+        logEl.innerHTML = log;
+      })
+    }
+  </script>
 </body>
 </html>
